@@ -1,0 +1,10 @@
+### CodeKit dosyaları
+config.codekit
+.sass-cache/
+
+### Sublime dosyaları
+*.sublime-project
+*.sublime-workspace
+
+### doc klasörü
+doc/
