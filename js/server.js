@@ -103,6 +103,6 @@ app.on("ready", function() {
 	});/*pencere.on("closed")*/
 
 	/*Developer Tools'u açıyoruz*/
-	pencere.webContents.openDevTools();
+	/*pencere.webContents.openDevTools();*/
 
 });/*app.on("ready")*/
