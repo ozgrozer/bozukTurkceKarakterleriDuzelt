@@ -46,6 +46,45 @@ socket.connect(port, host, function() {
 			/*Server'a dosya yolunu gönderiyoruz*/
 			socket.write(dosya.path);
 
+			/*asd*/
+			var reader = new FileReader();
+
+			/*asd*/
+			reader.onloadend = function(event) {
+
+				/*asd*/
+				if(event.target.readyState == FileReader.DONE) {
+
+					/*Dosya içeriğindeki bozuk karakterleri düzeltiyoruz*/
+					dosyaIcerigi = event.target.result.replace(/Ã§/g, "ç");
+					dosyaIcerigi = dosyaIcerigi.replace(/Ã‡/g, "Ç");
+					dosyaIcerigi = dosyaIcerigi.replace(/ÄŸ/g, "ğ");
+					dosyaIcerigi = dosyaIcerigi.replace(/Äž/g, "Ğ");
+					dosyaIcerigi = dosyaIcerigi.replace(/Ä±/g, "ı");
+					dosyaIcerigi = dosyaIcerigi.replace(/Ä°/g, "İ");
+					dosyaIcerigi = dosyaIcerigi.replace(/Ã¶/g, "ö");
+					dosyaIcerigi = dosyaIcerigi.replace(/Ã–/g, "Ö");
+					dosyaIcerigi = dosyaIcerigi.replace(/Ã¼/g, "ü");
+					dosyaIcerigi = dosyaIcerigi.replace(/Ãœ/g, "Ü");
+					dosyaIcerigi = dosyaIcerigi.replace(/ÅŸ/g, "ş");
+					dosyaIcerigi = dosyaIcerigi.replace(/Åž/g, "Ş");
+					dosyaIcerigi = dosyaIcerigi.replace(/ð/g, "ğ");
+					dosyaIcerigi = dosyaIcerigi.replace(/Ð/g, "Ğ");
+					dosyaIcerigi = dosyaIcerigi.replace(/ý/g, "ı");
+					dosyaIcerigi = dosyaIcerigi.replace(/Ý/g, "İ");
+					dosyaIcerigi = dosyaIcerigi.replace(/þ/g, "ş");
+					dosyaIcerigi = dosyaIcerigi.replace(/Þ/g, "Ş");
+
+					/*asd*/
+					dosyaSuruklemeAlaniYazisi__secici.innerHTML = dosyaIcerigi;
+
+				}/*asd*/
+
+			};/*asd*/
+
+			/*asd*/
+			/*reader.readAsBinaryString(dosya);*/
+
 		/*Eğer dosya uzantısı 'srt' değilse*/
 		} else {
 

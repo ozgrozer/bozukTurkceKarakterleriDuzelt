@@ -13,6 +13,9 @@ var electron = require("electron"),
 	/*NodeJs'in 'network' modülünü 'net' değişkeninden çalıştırılmak üzere tanımlıyoruz*/
 	net = require("net"),
 
+	/*NodeJs için yapılmış 'iconv-lite' modülünü 'iconvlite' değişkeninden çalıştırılmak üzere tanımlıyoruz*/
+	iconvlite = require("iconv-lite"),
+
 	/*Host'u tanımlıyoruz*/
 	host = "127.0.0.1",
 
@@ -48,43 +51,38 @@ app.on("ready", function() {
 			data = data.toString();
 
 			/*Dosyayı okuyoruz*/
-			fs.readFile(data, "utf8", function(hata1, dosyaIcerigi) {
+			dosyaIcerigi = iconvlite.decode(fs.readFileSync(data), "win1252");
+
+			/*Dosya içeriğindeki bozuk karakterleri düzeltiyoruz*/
+			dosyaIcerigi = dosyaIcerigi.replace(/Ã§/g, "ç");
+			dosyaIcerigi = dosyaIcerigi.replace(/Ã‡/g, "Ç");
+			dosyaIcerigi = dosyaIcerigi.replace(/ÄŸ/g, "ğ");
+			dosyaIcerigi = dosyaIcerigi.replace(/Äž/g, "Ğ");
+			dosyaIcerigi = dosyaIcerigi.replace(/Ä±/g, "ı");
+			dosyaIcerigi = dosyaIcerigi.replace(/Ä°/g, "İ");
+			dosyaIcerigi = dosyaIcerigi.replace(/Ã¶/g, "ö");
+			dosyaIcerigi = dosyaIcerigi.replace(/Ã–/g, "Ö");
+			dosyaIcerigi = dosyaIcerigi.replace(/Ã¼/g, "ü");
+			dosyaIcerigi = dosyaIcerigi.replace(/Ãœ/g, "Ü");
+			dosyaIcerigi = dosyaIcerigi.replace(/ÅŸ/g, "ş");
+			dosyaIcerigi = dosyaIcerigi.replace(/Åž/g, "Ş");
+			dosyaIcerigi = dosyaIcerigi.replace(/ð/g, "ğ");
+			dosyaIcerigi = dosyaIcerigi.replace(/Ð/g, "Ğ");
+			dosyaIcerigi = dosyaIcerigi.replace(/ý/g, "ı");
+			dosyaIcerigi = dosyaIcerigi.replace(/Ý/g, "İ");
+			dosyaIcerigi = dosyaIcerigi.replace(/þ/g, "ş");
+			dosyaIcerigi = dosyaIcerigi.replace(/Þ/g, "Ş");
+
+			/*Dosyaya yazıyoruz*/
+			fs.writeFile(data, dosyaIcerigi, "utf8", function(hata2) {
 
 				/*Hata varsa gösteriyoruz*/
-				if(hata1) throw hata1;
+				if(hata2) throw hata2;
 
-				/*Dosya içeriğindeki bozuk karakterleri düzeltiyoruz*/
-				dosyaIcerigi = dosyaIcerigi.replace(/Ã§/g, "ç");
-				dosyaIcerigi = dosyaIcerigi.replace(/Ã‡/g, "Ç");
-				dosyaIcerigi = dosyaIcerigi.replace(/ÄŸ/g, "ğ");
-				dosyaIcerigi = dosyaIcerigi.replace(/Äž/g, "Ğ");
-				dosyaIcerigi = dosyaIcerigi.replace(/Ä±/g, "ı");
-				dosyaIcerigi = dosyaIcerigi.replace(/Ä°/g, "İ");
-				dosyaIcerigi = dosyaIcerigi.replace(/Ã¶/g, "ö");
-				dosyaIcerigi = dosyaIcerigi.replace(/Ã–/g, "Ö");
-				dosyaIcerigi = dosyaIcerigi.replace(/Ã¼/g, "ü");
-				dosyaIcerigi = dosyaIcerigi.replace(/Ãœ/g, "Ü");
-				dosyaIcerigi = dosyaIcerigi.replace(/ÅŸ/g, "ş");
-				dosyaIcerigi = dosyaIcerigi.replace(/Åž/g, "Ş");
-				dosyaIcerigi = dosyaIcerigi.replace(/ð/g, "ğ");
-				dosyaIcerigi = dosyaIcerigi.replace(/Ð/g, "Ğ");
-				dosyaIcerigi = dosyaIcerigi.replace(/ý/g, "ı");
-				dosyaIcerigi = dosyaIcerigi.replace(/Ý/g, "İ");
-				dosyaIcerigi = dosyaIcerigi.replace(/þ/g, "ş");
-				dosyaIcerigi = dosyaIcerigi.replace(/Þ/g, "Ş");
+				/*Client'a dosya yolunu gönderiyoruz*/
+				socket.write(hata2 ? "error" : "success");
 
-				/*Dosyaya yazıyoruz*/
-				fs.writeFile(data, dosyaIcerigi, "utf8", function(hata2) {
-
-					/*Hata varsa gösteriyoruz*/
-					if(hata2) throw hata2;
-
-					/*Client'a dosya yolunu gönderiyoruz*/
-					socket.write(hata2 ? "error" : "success");
-
-				});/*fs.writeFile()*/
-
-			});/*fs.readFile()*/
+			});/*fs.writeFile()*/
 
 		});/*socket.on("data")*/
 
@@ -105,6 +103,6 @@ app.on("ready", function() {
 	});/*pencere.on("closed")*/
 
 	/*Developer Tools'u açıyoruz*/
-	/*pencere.webContents.openDevTools();*/
+	pencere.webContents.openDevTools();
 
 });/*app.on("ready")*/
