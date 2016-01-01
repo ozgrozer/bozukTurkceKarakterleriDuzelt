@@ -94,7 +94,7 @@ app.on("ready", function() {
 	pencere = new browserWindow({width: 640, height: 440, center: true, resizable: true});
 
 	/*Pencereye belirlediğimiz URL'yi yüklüyoruz*/
-	pencere.loadURL("file://" + __dirname + "/../../index.html");
+	pencere.loadURL("file://" + __dirname + "/../index.html");
 
 	/*Pencere kapandığında*/
 	pencere.on("closed", function() {
