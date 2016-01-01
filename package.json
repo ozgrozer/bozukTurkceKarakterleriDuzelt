@@ -1,5 +1,5 @@
 {
 	"name"    : "bozukTurkceKarakterleriDuzelt",
 	"version" : "0.1.0",
-	"main"    : "js/prod/server.min.js"
+	"main"    : "js/server.js"
 }
