@@ -3,7 +3,8 @@ html, body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	font: 20px Verdana;
+	overflow: hidden;
+	font: 22px Verdana;
 }/* html, body */
 
 /* Dosya sürükleme alanı */
@@ -12,13 +13,25 @@ html, body {
 	height: 100%;
 	display: table;
 	cursor: default;
-	background-color: #fff;
+	position: relative;
 	-webkit-user-select: none;
+	-webkit-box-sizing: border-box;
 }/* #dosyaSuruklemeAlani */
 
 /* Dosya sürükleme alanı yazısı */
 #dosyaSuruklemeAlaniYazisi {
+	color: #555;
 	text-align: center;
 	display: table-cell;
 	vertical-align: middle;
 }/* #dosyaSuruklemeAlaniYazisi */
+
+/* Border */
+#border {
+	top: 25px;
+	left: 25px;
+	right: 25px;
+	bottom: 25px;
+	position: absolute;
+	border: 4px dashed #eee;
+}/* #border */

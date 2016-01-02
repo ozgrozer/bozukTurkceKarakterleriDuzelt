@@ -50,22 +50,10 @@ app.on("ready", function() {
 			/*Electron içerisindeki bir bug yüzünden data'yı string'e çeviriyoruz yoksa hata alıyoruz*/
 			data = data.toString();
 
-			/*Dosyayı okuyoruz*/
+			/*Dosyayı iconvlite ile okuyoruz*/
 			dosyaIcerigi = iconvlite.decode(fs.readFileSync(data), "win1252");
 
-			/*Dosya içeriğindeki bozuk karakterleri düzeltiyoruz*/
-			dosyaIcerigi = dosyaIcerigi.replace(/Ã§/g, "ç");
-			dosyaIcerigi = dosyaIcerigi.replace(/Ã‡/g, "Ç");
-			dosyaIcerigi = dosyaIcerigi.replace(/ÄŸ/g, "ğ");
-			dosyaIcerigi = dosyaIcerigi.replace(/Äž/g, "Ğ");
-			dosyaIcerigi = dosyaIcerigi.replace(/Ä±/g, "ı");
-			dosyaIcerigi = dosyaIcerigi.replace(/Ä°/g, "İ");
-			dosyaIcerigi = dosyaIcerigi.replace(/Ã¶/g, "ö");
-			dosyaIcerigi = dosyaIcerigi.replace(/Ã–/g, "Ö");
-			dosyaIcerigi = dosyaIcerigi.replace(/Ã¼/g, "ü");
-			dosyaIcerigi = dosyaIcerigi.replace(/Ãœ/g, "Ü");
-			dosyaIcerigi = dosyaIcerigi.replace(/ÅŸ/g, "ş");
-			dosyaIcerigi = dosyaIcerigi.replace(/Åž/g, "Ş");
+			/*Dosya içerisindeki karakterleri düzeltiyoruz*/
 			dosyaIcerigi = dosyaIcerigi.replace(/ð/g, "ğ");
 			dosyaIcerigi = dosyaIcerigi.replace(/Ð/g, "Ğ");
 			dosyaIcerigi = dosyaIcerigi.replace(/ý/g, "ı");
@@ -73,13 +61,13 @@ app.on("ready", function() {
 			dosyaIcerigi = dosyaIcerigi.replace(/þ/g, "ş");
 			dosyaIcerigi = dosyaIcerigi.replace(/Þ/g, "Ş");
 
-			/*Dosyaya yazıyoruz*/
+			/*Değiştirilmiş içeriği dosyaya utf-8 formatında yazıyoruz*/
 			fs.writeFile(data, dosyaIcerigi, "utf8", function(hata2) {
 
 				/*Hata varsa gösteriyoruz*/
 				if(hata2) throw hata2;
 
-				/*Client'a dosya yolunu gönderiyoruz*/
+				/*Client'a sonuç durumunu gönderiyoruz*/
 				socket.write(hata2 ? "error" : "success");
 
 			});/*fs.writeFile()*/
@@ -89,7 +77,7 @@ app.on("ready", function() {
 	}).listen(port, host);/*net.createServer()*/
 
 	/*Tarayıcı penceresini oluşturuyoruz*/
-	pencere = new browserWindow({width: 640, height: 440, center: true, resizable: true});
+	pencere = new browserWindow({width: 640, height: 400, center: true, resizable: false});
 
 	/*Pencereye belirlediğimiz URL'yi yüklüyoruz*/
 	pencere.loadURL("file://" + __dirname + "/../index.html");

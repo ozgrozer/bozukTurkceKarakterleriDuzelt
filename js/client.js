@@ -1,7 +1,7 @@
 /*NodeJs'in 'network' modülünü 'net' değişkeninden çalıştırılmak üzere tanımlıyoruz*/
 var net = require("net"),
 
-	/*'Net' modülündeki 'Socket' nesnesini 'socket' değişkeninden çalıştırılmak üzere tanımlıyoruz*/
+	/*'Net' modülündeki 'Socket' sınıfını 'socket' değişkeninden çalıştırılmak üzere tanımlıyoruz*/
 	socket = new net.Socket(),
 
 	/*Host'u tanımlıyoruz*/
@@ -37,30 +37,11 @@ socket.connect(port, host, function() {
 		/*Sürüklenen dosyayı 'dosya' değişkenine aktarıyoruz*/
 		var dosya = e.dataTransfer.files[0];
 
-		/*Eğer dosya uzantısı 'srt' ise*/
-		if(dosya.path.split(".").pop() == "srt") {
+		/*Bilgi mesajı gösteriyoruz*/
+		dosyaSuruklemeAlaniYazisi__secici.innerHTML = "Dosyadaki bozuk Türkçe karakterler düzeltiliyor.";
 
-			/*Bilgi mesajı gösteriyoruz*/
-			dosyaSuruklemeAlaniYazisi__secici.innerHTML = "Dosyadaki bozuk Türkçe karakterler düzeltiliyor.";
-
-			/*Server'a dosya yolunu gönderiyoruz*/
-			socket.write(dosya.path);
-
-		/*Eğer dosya uzantısı 'srt' değilse*/
-		} else {
-
-			/*Hata mesajı gösteriyoruz*/
-			dosyaSuruklemeAlaniYazisi__secici.innerHTML = "Sadece 'srt' uzantılı dosyaları seçebilirsiniz.";
-
-			/*2 saniye sonra*/
-			setTimeout(function() {
-
-				/*Hatayı silip orjinal metni geri yazıyoruz*/
-				dosyaSuruklemeAlaniYazisi__secici.innerHTML = dosyaSuruklemeAlaniYazisi__deger;
-
-			}, 2000);/*setTimeout()*/
-
-		}/*if(dosya[i].split(".").pop() == "srt")*/
+		/*Server'a dosya yolunu gönderiyoruz*/
+		socket.write(dosya.path);
 
 	};/*dosyaSuruklemeAlani__secici.ondrop*/
 
