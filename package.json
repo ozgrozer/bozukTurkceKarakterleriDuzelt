@@ -1,7 +1,7 @@
 {
-	"name"    : "bozukTurkceKarakterleriDuzelt",
-	"version" : "0.1.0",
-	"main"    : "js/server.js",
+	"name": "win1252-utf8-donusturucu",
+	"version": "0.1.0",
+	"main": "js/server.js",
 	"dependencies": {
 		"iconv-lite": "0.4.13"
 	}
